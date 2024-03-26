@@ -1,5 +1,6 @@
 from giphy_api import GiphyAPI
 import os
+import random
 
 #API Key import
 # API_KEY=os.environ["GIPHY_API_KEY"]
@@ -42,13 +43,21 @@ class GiphyCLI:
             return dict
         #Check to see if the markdown option was used
         if(markdown):
-            #If so, output the data as a in markdown format
-            print(f'MARKDOWN FORMATTED STRING ')
-            return dict
+            # print(f'MARKDOWN FORMATTED STRING ')
+            for i, dict in enumerate(dict["data"][:count]):
+                gif_title = dict["title"]
+                gif_URL = dict["images"]["original"]["url"]
+                string = (f"{i+1}) ![{gif_title}]({gif_URL})")
+                # string = (f"{i+1}) ![{(dict["title"])}]({(dict["images"]["original"]["url"])})")
+                print(string)
         else:
-            #If so, output the data
-            print(f'NON-MARKDOWN FORMATTED STRING')
-            return dict
+            # print(f'NON-MARKDOWN FORMATTED STRING')
+            for i, dict in enumerate(dict["data"][:count]):
+                gif_title = dict["title"]
+                gif_URL = dict["bitly_url"]
+                string = (f"{i+1}) {gif_title} ({gif_URL})")
+                # string = (f"{i+1}) {(dict["title"])} ({(dict["bitly_url"])})")
+                print(string)
 
 
 ###########This file should be the logic for the CLI Tool. It should do the MarkDown Transcripting 
