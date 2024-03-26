@@ -1,36 +1,32 @@
 # Imports
 import os
 import click
-import giphy_cli
+from giphy_cli import GiphyCLI
 
 #API Key import
 API_KEY=os.environ["GIPHY_API_KEY"]
-
-GighyCLI = giphy_cli()
+Giphy_CLI = GiphyCLI()
 
 @click.group()
 def gif():
-    click.echo('Make API')
-    click.echo('Make CLI')
-
+    pass
 
 @gif.command()
 @click.option('--count', default=5, help='The number of gifs to return.')
-@click.option('--markdown', default=0, help='Returns the gifs in Markdown format.')
-
-def trending_cmd(count, markdown):
-    #Retrieve trending GIFs.
-    results = GighyCLI.get_trending(count, markdown)
-    click.echo(results)
+@click.option('--markdown', is_flag=True, help='Returns the gifs in Markdown format.')
+def trending(count, markdown):
+    # Retrieve trending GIFs.
+    Giphy_CLI.get_trending(API_KEY, count, markdown)
 
 @gif.command()
 @click.option('--count', default=5, help='The number of gifs to return.')
-@click.option('--markdown', default=0, help='Returns the gifs in Markdown format.')
-@click.option('--lucky', default=0, help='Simlaur to Googles Im feeling lucky button, this will return a random gif.')
+@click.option('--markdown', is_flag=True, help='Returns the gifs in Markdown format.')
+@click.option('--query', prompt='Search query', help='The search string to find specific gifs.')
+@click.option('--lucky', is_flag=True, help='Similar to Google’s "I’m Feeling Lucky" button, this will return a random gif.')
 
-def search_cmd(count, markdown, query, lucky):
+def search(count, markdown, query, lucky):
     #Retrieve trending GIFs.
-    results = GighyCLI.get_search(count, markdown, query, lucky)
+    results = Giphy_CLI.get_search(count, markdown, query, lucky)
     click.echo(results)
 
 
